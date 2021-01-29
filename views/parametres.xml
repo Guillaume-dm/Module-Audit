@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?> <!-- Indique les caractéristiques du XML qui est utilisé -->
+<odoo>
+
+    <record model="ir.ui.view" id="audit_tree_view_2">
+        <field name="name">audit.listing</field>
+        <field name="model">une_liste_deux</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" string="🚦 Niveaux d'urgence disponibles"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="audit_form_view_2">
+        <field name="name">audit.listing</field>
+        <field name="model">une_liste_deux</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="name" string="🆕 Ajouter/modifier un niveau d'urgence"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="audit_tree_view_3">
+        <field name="name">audit.listingg</field>
+        <field name="model">une_liste_un</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" string="📂 Type de préconisation disponible"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="audit_form_view_3">
+        <field name="name">audit.listingg</field>
+        <field name="model">une_liste_un</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" string="🆕 Ajouter/modifier un type de préconisation"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>
