@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!-- Indique les caractéristiques du XML qui est utilisé -->
+<odoo>
+    <data noupdate="1"> <!-- Indique que la création des éléments sera effectué que une seule et unique fois -->
+        <record id="0" model="une_liste_un">
+                <field name="name">🏭 Serveurs physiques</field>
+        </record>
+        <record id="1" model="une_liste_un">
+                <field name="name">💭 Serveurs virtuels</field>
+        </record>
+        <record id="2" model="une_liste_un">
+                <field name="name">🌐 Réseau</field>
+        </record>
+        <record id="3" model="une_liste_un">
+                <field name="name">🖨️📽️ Equipements</field>
+        </record>
+        <record id="4" model="une_liste_un">
+                <field name="name">🌐📶 Accès internet</field>
+        </record>
+        <record id="5" model="une_liste_un">
+                <field name="name">📧 Messagerie</field>
+        </record>
+        <record id="6" model="une_liste_un">
+                <field name="name">📦 Configuration hyperviseur</field>
+        </record>
+        <record id="7" model="une_liste_un">
+                <field name="name">🎛️ Local informatique</field>
+        </record>
+        <record id="8" model="une_liste_un">
+                <field name="name">🔌 Baie informatique</field>
+        </record>
+        <record id="9" model="une_liste_un">
+                <field name="name">🔄 Politique de mise à jour Windows</field>
+        </record>
+        <record id="10" model="une_liste_un">
+                <field name="name">☣ Antivirus</field>
+        </record>
+        <record id="11" model="une_liste_un">
+                <field name="name">📩 Antispam</field>
+        </record>
+        <record id="12" model="une_liste_un">
+                <field name="name">🔥 Pare-feu</field>
+        </record>
+        <record id="13" model="une_liste_un">
+                <field name="name">🔢 Chiffrage</field>
+        </record>
+        <record id="14" model="une_liste_un">
+                <field name="name">🌍 VPN</field>
+        </record>
+        <record id="15" model="une_liste_un">
+                <field name="name">💾 Sauvegardes</field>
+        </record>
+        <record id="16" model="une_liste_un">
+                <field name="name">🖥️ Parc informatique</field>
+        </record>
+        <record id="17" model="une_liste_un">
+                <field name="name">❓ Autre</field>
+        </record>
+        <record id="100" model="une_liste_deux">
+                <field name="name">🔴</field> <!-- Pastille de couleur rouge-->
+        </record>
+        <record id="101" model="une_liste_deux">
+                <field name="name">🟠</field> <!-- Pastille de couleur orange-->
+        </record>
+        <record id="102" model="une_liste_deux">
+                <field name="name">🟡</field> <!-- Pastille de couleur jaune-->
+        </record>
+        <record id="103" model="une_liste_deux">
+                <field name="name">🟢</field> <!-- Pastille de couleur verte-->
+        </record>
+        <record id="104" model="une_liste_deux">
+                <field name="name">⚪</field> <!-- Pastille de couleur blanche-->
+        </record>
+    </data>
+</odoo>
