@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?> <!-- Indique les caractéristiques du XML qui est utilisé -->
+    <odoo>
+
+        <!-- top level menu: no parent -->
+        <menuitem id="main_audit_menu" name="Gestionnaire d'audits 📄"/> <!-- Apparait en menu, sert à réactualiser -->
+        <!-- A first level in the left side menu is needed
+             before using action= attribute -->
+
+        <record model="ir.actions.act_window" id="audit_create_action">
+            <field name="name">🆕📄 Créer un nouveau audit</field> <!-- Rappelle le titre du sous-menu choisi -->
+            <field name="res_model">adquat_audit.audit</field>
+            <field name="view_mode">form</field> <!-- Bloque le vue de consultation, n'autorise que la création -->
+        </record>
+        <record model="ir.actions.act_window" id="audit_list_action">
+            <field name="name">🗄️📄 Créer un audit via un modèle</field> <!-- Rappelle le titre du sous-menu choisi -->
+            <field name="res_model">adquat_audit.audit</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record model="ir.actions.act_window" id="audit_list_global_action">
+            <field name="name">🏭📄 Tous les audits de l'entreprise</field> <!-- Rappelle le titre du sous-menu choisi -->
+            <field name="res_model">adquat_audit.audit</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record model="ir.actions.act_window" id="audit_list_me_action">
+            <field name="name">🙋‍♂️🙋‍♀️‍📄 Mes audits</field> <!-- Rappelle le titre du sous-menu choisi -->
+            <field name="res_model">adquat_audit.audit</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_filtre_id': 1}</field> <!-- Permet une recherche personnelle automatique de ses audits -->
+        </record>
+        <record model="ir.actions.act_window" id="audit_stats_action">
+            <field name="name">📊  Statistiques</field> <!-- Rappelle le titre du sous-menu choisi -->
+            <field name="res_model">adquat_audit.audit</field>
+            <field name="view_mode">graph</field> <!-- Sert à reistrindre la vue qu'en mode graph -->
+        </record>
+        <record model="ir.actions.act_window" id="audit_param_action">
+            <field name="name">🚦 Gestionnaire des états</field> <!-- Rappelle le titre du sous-menu choisi -->
+            <field name="res_model">une_liste_deux</field>
+            <field name="view_mode">tree,form</field> <!-- Sert à reistrindre la vue qu'en mode graph -->
+        </record>
+        <record model="ir.actions.act_window" id="audit_params_action">
+            <field name="name">📂  Gestionnaire des catégories</field> <!-- Rappelle le titre du sous-menu choisi -->
+            <field name="res_model">une_liste_un</field>
+            <field name="view_mode">tree,form</field> <!-- Sert à reistrindre la vue qu'en mode graph -->
+        </record>
+
+        <record model="ir.ui.view" id="audit_tree_view">
+            <field name="name">audit.tree</field>
+            <field name="model">adquat_audit.audit</field>
+            <field name="arch" type="xml">
+                <tree string="Audit Tree">
+                    <field name="name" string="🖊️ Titre de l'audit"/> <!-- Donne le titre choisi de l'audit -->
+                    <field name="salarie_id" string="👨👩 Salarié(e)" width="320px"/> <!-- Indique le nom du salarié(e) qui gère l'audit -->
+                    <field name="date_creation" string="🏁 Date de création" width="320px"/> <!-- Donne la date de commencement de l'audit -->
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="audit_form_view">
+            <field name="name">audit.form</field>
+            <field name="model">adquat_audit.audit</field>
+            <field name="arch" type="xml">
+                <form string="Audit Form">
+                    <sheet>
+                        <notebook>
+                            <page string="📝 Informations de base"> <!-- Onglet n°1 d'un audit, onglet bref -->
+                                <group string="">
+                                    <field name="name" string="🖊️ Nom de l'audit" /> <!-- Donne le titre choisi de l'audit -->
+                                    <field name="salarie_id" string="👨👩 Salarié(e)"/> <!-- Indique le nom du salarié(e) qui gère l'audit -->
+                                    <field name="date_creation" string="🏁 Date de création"/> <!-- Donne la date de commencement de l'audit -->
+                                </group>
+                            </page>
+                            <page string="📖 Détails"> <!-- Onglet n°2 d'un audit -->
+                                <group string="🔌 Infrastructure-"> <!-- Sous-titre de la session 1, 1ère grande partie de l'audit -->
+                                </group>
+                                <group string="">
+                                    <field name="serveurs_reels" string="🏭 Serveurs physiques ?" size="210px"/> <!-- Sert à choisir si il y a des serveurs réels -->
+                                </group>
+                                <field name="l_serveur_reel" attrs="{'invisible':[('serveurs_reels','=', False)]}"> <!-- Apparait seulement si la case est coché -->
+                                    <tree string="ajt_serveur_ree" >
+                                        <field name="ip" string="📍 IP" width="150px"/> <!-- Sert à voir l'IP du serveur physique -->
+                                        <field name="nom_serveur" string="🔠 Nom_serveur" width="150px"/> <!-- Sert à voir le nom du serveur physique -->
+                                        <field name="role_windows" string="☑️ Rôle Windows" width="100px"/>
+                                        <field name="processeur" string="⚡ Processeur" width="100px"/> <!-- Sert à voir le type de processeur pour le serveur physique en consultation -->
+                                        <field name="ram2" string="♨‍ RAM" width="65px"/> <!-- Sert à voir la valeur de la RAM pour l'appareil de consultation -->
+                                        <field name="disque_dur" string="💽‍ Disque dur" width="100px"/> <!-- Sert à voir la valeur du disque dur pour l'appareil de consultation -->
+                                        <field name="systeme_raid" string="💽💽 Carte + système raid" width="250px"/>
+                                        <field name="os" string="⚙ OS" width="70px"/> <!-- Sert à voir l'OS du serveur physique -->
+                                    </tree>
+                                    <form>
+                                        <sheet>
+                                            <group>
+                                                <field name="ip" string="📍 IP" width="150px"/> <!-- Sert à indiquer l'IP du serveur physique -->
+                                                <field name="nom_serveur" string="🔠 Nom de serveur" width="26px"/> <!-- Sert à indiquer le nom du serveur physique -->
+                                                <field name="marque" string="🔸 Marque" width="100px"/><!-- Sert à indiquer la marque du serveur physique -->
+                                                <field name="modele_serveur" string="🔢 Modèle" width="150px"/> <!-- Sert à indiquer le modèle du serveur physique -->
+                                                <field name="numero_serie" string="🆔 Numéro de série" width="150px"/>
+                                                <field name="garantie" string="🛠️ Garantie" width="100px"/> <!-- Sert à indiquer la durée de la garantie du serveur -->
+                                                <field name="role_windows" string="☑️ Rôle Windows" width="150px"/>
+                                                <field name="autre_role" string="✅ Autres rôles" width="200px"/> <!-- Sert à indiquer les autres rôles du serveur physique -->
+                                                <field name="processeur" string="⚡ Processeur" width="210px"/> <!-- Sert à indiquer le type de processeur pour l'appareil de consultation -->
+                                                <field name="ram2" string="♨‍ RAM" width="75px"/> <!-- Sert à indiquer la valeur de la RAM pour l'appareil de consultation -->
+                                                <field name="disque_dur" string="💽‍ Disque dur" width="210px"/> <!-- Sert à voir la valeur du disque dur pour le serveur physique en saisie -->
+                                                <field name="systeme_raid" string="💽💽 Carte et système raid" width="200px"/>
+                                                <field name="os" string="⚙ OS" width="190px"/> <!-- Sert à indiquer l'OS du serveur physique -->
+                                                <field name="emplacement" string="🔎 Emplacement physique" width="200px"/> <!-- Sert à indiquer l'emplacement physique du serveur -->
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+                                <group string=""> <!-- Sous-titre de la session 1 -->
+                                    <field name="serveurs_virtuels" string="💭 Serveurs virtuels ?" size="210px"/> <!-- Sert à choisir si il y a des serveurs virtuels -->
+                                </group>
+                                <field name="l_serveur_virt" attrs="{'invisible':[('serveurs_virtuels','=', False)]}"> <!-- Apparait seulement si la case est coché -->
+                                    <tree string="ajt_serveur_vir" >
+                                        <field name="ip" string="📍 IP" size="190px"/> <!-- Sert à voir l'IP du serveur virtuel -->
+                                        <field name="nom_serveur" string="🔠 Nom de serveur" size="210px"/> <!-- Sert à voir le nom du serveur virtuel -->
+                                        <field name="marque" string="🔸 Marque" size="210px"/> <!-- Sert à voir la marque du serveur virtuel -->
+                                        <field name="role_windows" string="☑️ Rôle Windows" size="210px"/> <!-- Sert à voir les rôles Windows du serveur virtuel -->
+                                        <field name="autre_role" string="✅ Autres rôles" width="200px"/> <!-- Sert à indiquer les autres rôles du serveur virtuel -->
+                                        <field name="processeur" string="⚡ Processeur" size="210px"/> <!-- Sert à voir le type de processeur pour l'appareil de consultation -->
+                                        <field name="ram2" string="♨‍ RAM" size="120px"/> <!-- Sert à voir la valeur de la RAM pour l'appareil de consultation -->
+                                        <field name="disque_dur" string="💽‍ Disque dur" size="210px"/> <!-- Sert à voir la valeur de la RAM pour l'appareil de consultation -->
+                                        <field name="os" string="⚙ OS" size="210px"/> <!-- Sert à voir l'OS du serveur virtuel -->
+                                    </tree>
+                                    <form>
+                                        <sheet>
+                                            <group>
+                                                <field name="ip" string="📍 IP" size="190px"/> <!-- Sert à indiquer l'IP du serveur virtuel -->
+                                                <field name="nom_serveur" string="🔠 Nom de serveur" size="210px"/> <!-- Sert à indiquer le nom du serveur virtuel -->
+                                                <field name="marque" string="🔸 Marque" size="210px"/> <!-- Sert à indiquer la marque du serveur virtuel -->
+                                                <field name="role_windows" string="☑️ Rôle Windows" size="210px"/> <!-- Sert à saisir les rôles Windows du serveur virtuel -->
+                                                <field name="autre_role" string="✅ Autres rôles" width="200px"/> <!-- Sert à indiquer les autres rôles du serveur virtuel -->
+                                                <field name="processeur" string="⚡ Processeur" size="210px"/> <!-- Sert à indiquer le type de processeur pour l'appareil de consultation -->
+                                                <field name="ram2" string="♨‍ RAM" size="120px"/> <!-- Sert à indiquer la valeur de la RAM pour l'appareil de consultation -->
+                                                <field name="disque_dur" string="💽‍ Disque dur" size="210px"/> <!-- Sert à indiquer la valeur de la RAM pour l'appareil de consultation -->
+                                                <field name="os" string="⚙ OS" size="210px"/> <!-- Sert à indiquer l'OS du serveur virtuel -->
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+                                <group string="🌐 Réseau internet-"> <!-- Partie du réseau -->
+                                </group>
+                                <field name="l_reseau">
+                                    <tree string="ajt_resea" >
+                                        <field name="site" string="📍 Site" size="210px"/> <!-- Sert à voir le lieu du réseau internet -->
+                                        <field name="plage_ip" string="⚙ Plage IP" size="210px"/> <!-- Sert à voir la plage IP du réseau Internet -->
+                                        <field name="masque" string="🎛️ Masque" size="210px"/> <!-- Sert à voir le masque du réseau Internet -->
+                                        <field name="routeur" string="📶 Routeur" size="210px"/> <!-- Sert à voir le routeur du réseau Internet -->
+                                        <field name="dns" string="📟‍ DNS" size="210px"/> <!-- Sert à voir le DNS du réseau Internet -->
+                                    </tree>
+                                    <form>
+                                        <sheet>
+                                            <group>
+                                                <field name="site" string="📍 Site" size="210px"/> <!-- Sert à indiquer le lieu du réseau internet -->
+                                                <field name="plage_ip" string="⚙ Plage IP" size="210px"/> <!-- Sert à indiquer la plage IP du réseau Internet -->
+                                                <field name="masque" string="🎛️ Masque" size="210px"/> <!-- Sert à indiquer le masque du réseau Internet -->
+                                                <field name="routeur" string="📶 Routeur" size="210px"/> <!-- Sert à indiquer le routeur du réseau Internet -->
+                                                <field name="dns" string="📟‍ DNS" size="210px"/> <!-- Sert à indiquer le DNS du réseau Internet -->
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+                                <group string="🖨️📽️ Equipements-"> <!-- Partie du réseau -->
+                                </group>
+                                <field name="l_equipements">
+                                    <tree string="ajt_equipement" >
+                                        <field name="site" string="📍 Site" size="210px"/> <!-- Sert à voir le lieu de l'équipement -->
+                                        <field name="nom_description" string="❓ Nom/description" size="210 px"/> <!-- Sert à voir le nom (et la description) de l'équipement -->
+                                        <field name="marque" string="🔸 Marque" size="210px"/> <!-- Sert à voir la marque de l'équipement -->
+                                        <field name="modele_equipement" strinf="⚙ Modèle" size="210px"/> <!-- Sert à voir le modèle de l'équipement -->
+                                        <field name="fonction" string="✅ Fonction(s)" size="210px"/> <!-- Sert à voir la fonction de l'équipement -->
+                                        <field name="emplacement" string="🔎 Emplacement physique" size="210px"/> <!-- Sert à voir l'emplacement réel de l'équipement -->
+                                    </tree>
+                                    <form>
+                                        <sheet>
+                                            <group>
+                                                <field name="site" string="📍 Site" size="210px"/>  <!-- Sert à renseigné le lieu du l'équipement -->
+                                                <field name="nom_description" string="❓ Nom/description" size="210 px"/> <!-- Sert à renseigné le nom (et la description) de l'équipement -->
+                                                <field name="marque" string="🔸 Marque" size="210px"/> <!-- Sert à renseigné la marque de l'équipement -->
+                                                <field name="modele_equipement" string="⚙ Modèle" size="210px"/> <!-- Sert à renseigné le modèle de l'équipement -->
+                                                <field name="fonction" string="✅ Fonction(s)" size="210px"/> <!-- Sert à reinseigné la fonction de l'équipement -->
+                                                <field name="emplacement" string="🔎 Emplacement physique" size="210px"/> <!-- Sert à renseigné l'emplacement réel de l'équipement -->
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+                                <group string="">
+                                    <field name="acces_internet_2" string="🌐📶 Accès internet"/> <!-- Champ image sur l'accès internet de l'entreprise -->
+                                    <field name="messagerie" string="📧 Messagerie" /> <!-- Champ texte sur les messageries de l'entreprise -->
+                                    <field name="hyperviseur" string="📦 Configuration hyperviseur" /> <!-- Champ texte sur la configuration hyperviseur de l'entreprise -->
+                                    <field name="local" string="🎛️ Local informatique"/> <!-- Champ texte sur le local informatique de l'entreprise -->
+                                    <field name="baie" string="🔌 Baie informatique"/> <!-- Champ texte sur la baie informatique de l'entreprise -->
+                                </group>
+                                <group string="🔑 Sécurité"> <!-- Seconde grande partie de l'audit -->
+                                    <field name="pol_windows" string="🔄 Politique de mise à jour Windows" /> <!-- Champ texte sur la politique des mises à jours Windows par l'entreprise -->
+                                    <field name="antivirus" string="☣ Antivirus"/> <!-- Champ texte sur l'antivirus de l(entreprise -->
+                                    <field name="antispam" string="📩 Antispam"/> <!-- Champ texte sur l'antispam de l'entreprise -->
+                                    <field name="parefeu" string="🔥 Pare-feu" /> <!-- Champ texte sur le pare-feu de l'entreprise -->
+                                    <field name="chiffrage" string="🔢 Chiffrage"/> <!-- Champ texte sur le chiffrement des données -->
+                                    <field name="vpn" string="🌍 VPN"/> <!-- Champ texte sur le VPN -->
+                                    <field name="sauvegardes" string="💾 Sauvegardes"/> <!-- Champ texte sur les sauvegardes -->
+                                </group>
+                                <group string="🖥️ Parc informatique-"> <!-- Partie du parc informatique, 3° grande partie de l'audit -->
+                                </group>
+                                <field name="l_ram">
+                                    <tree string="ajt_parcinf" >
+                                        <field name="username" string="👨‍💻👩‍💻 Nom de l'utilisateur" size="210px"/> <!-- Sert à voir le nom de l'utilisateur  pour l'ordinateur de saisie -->
+                                        <field name="modele" string="⚙ Modèle" size="210px"/> <!-- Sert à voir le  modèle pour l'ordinateur de consultation -->
+                                        <field name="systeme" string="💻🖥️ Système d'exploitation" size="210px"/> <!-- Indique le système d'exploitation pour l'ordinateur de consultation -->
+                                        <field name="processeur" string="⚡ Processeur" size="210px"/> <!-- Sert à voir le type de processeur pour l'appareil de consultation -->
+                                        <field name="ram2" string="♨‍ RAM" size="210px"/> <!-- Sert à voir la valeur de la RAM pour l'ordinateur de consultation -->
+                                        <field name="type_sto" string="💽 Type de stockage" /> <!-- Indique le type de stockage pour l'ordinateur en consultation -->
+                                        <field name="office" string="⌨ Version d'office" /> <!-- Indique le type de stockage pour l'ordinateur en consultation -->
+                                        <field name="commentaires" string="✏️‍ Commentaires" size="210px"/> <!-- Sert à voir les commentaires pour l'ordinateur de consultation -->
+                                    </tree>
+                                    <form>
+                                        <sheet>
+                                            <group>
+                                                <field name="username" string="👨‍💻👩‍💻 Nom de l'utilisateur" size="210px"/> <!-- Sert à définir l'utilisateur  pour l'ordinateur de saisie -->
+                                                <field name="modele" string="⚙ Modèle" size="210px"/> <!-- Sert à définir le modèle  pour l'ordinateur de saisie -->
+                                                <field name="systeme" string="💻🖥️ Système d'exploitation" size="210px"/> <!-- Sert à définir le système d'explotation pour l'ordinateur en saisie -->
+                                                <field name="processeur" string="⚡ Processeur" size="210px"/>  <!-- Sert à définir le type de processeur pour l'ordinateur en saisie -->
+                                                <field name="ram2" string="♨‍ RAM"/> <!-- Sert à définir la valeur de la RAM pour l'ordinateur de saisie -->
+                                                <field name="type_sto" string="💽 Type de stockage" /> <!-- Sert à définir le type de stockage de l'ordinateur en saisie -->
+                                                <field name="office" string="⌨ Version d'office" /> <!-- Indique la version d'office pour l'ordinateur en consultation -->
+                                                <field name="commentaires" string="✏️‍ Commentaires" size="210px"/> <!-- Sert à définir la valeur les commentaires pour l'ordinateur de consultation -->
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+                                <field name="l_preconisation">
+                                    <tree string="ajt_compterend" >
+                                        <field name="liste_un" string="⚠ Types de préconisation" size="210px"/> <!-- Sert à définir un type de préconisation -->
+                                        <field name="preconisation" string="ℹ Préconisations" size="210px"/> <!-- Sert à afficher les préconisations finales -->
+                                        <field name="liste_deux" string="🚦 Niveaux d'urgence" size="105px"/> <!-- Sert à indiquer le niveau d'urgence de la préconisation -->
+                                    </tree>
+                                    <form>
+                                        <sheet>
+                                            <group>
+                                                <field name="liste_un" string="❔ Type de préconisation" size="210px"/> <!-- Sert à définir un type de préconisation -->
+                                                <field name="preconisation" string="➕ Ajouter une préconisation" size="210px"/> <!-- Sert à définir une préconisation finale -->
+                                                <field name="liste_deux" string="🚦 Niveau d'urgence" size="105px"/> <!-- Sert à définir le niveau d'urgence de la préconisation -->
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="audit_search_view">
+            <field name="name">audit.search</field>
+            <field name="model">adquat_audit.audit</field>
+            <field name="arch" type="xml">
+                <search string="Audit Search">
+                    <field name="name" string="🖊️ Titre de l'audit"/> <!-- Donne le titre choisi de l'audit -->
+                    <field name="salarie_id" string="👨👩 Salarié(e)" width="320px"/> <!-- Indique le nom du salarié(e) qui gère l'audit -->
+                    <field name="date_creation" string="🏁 Date de création" width="320px"/> <!-- Donne la date de commencement de l'audit -->
+                    <filter name="filtre_id" domain="[('salarie_id','=',uid)]"/>
+                </search>
+            </field>
+        </record>
+
+
+        <menuitem id="audit_menu001" name="🆕 NOUVEAU AUDIT"
+            parent="main_audit_menu"/> <!-- Apparait en  menu n°1 -->
+
+        <menuitem id="audit_menu001A" name="📄 Sans modèle"
+                  parent="audit_menu001"
+                  action="audit_create_action"/> <!-- Apparait en sous-menu n°1 du menu n°1 -->
+        <!-- the following menuitem should appear *after*
+             its parent openacademy_menu and *after* its
+             action course_list_action -->
+        <menuitem id="audit_menu001B" name="🗂️ Avec un modèle existant"
+                  parent="audit_menu001"
+                  action="audit_list_action"/> <!-- Apparait en sous-menu n°2 du menu n°1 -->
+
+        <menuitem id="audit_menu002" name="📂 CONSULTER LES ANCIENS AUDITS"
+            parent="main_audit_menu"/> <!-- Apparait en  menu n°2 -->
+
+        <menuitem id="audit_menu002A" name="🙋‍♂🙋‍ ‍Mes audits"
+                  parent="audit_menu002"
+                  action="audit_list_me_action"/> <!-- Apparait en sous-menu n°1 du menu n°2 -->
+
+        <menuitem id="audit_menu002B" name="🗄️ Tous les audits"
+                  parent="audit_menu002"
+                  action="audit_list_global_action"/> <!-- Apparait en sous-menu n°2 du menu n°2 -->
+
+        <menuitem id="audit_menu003" name="📊 STATISTIQUES"
+            parent="main_audit_menu" sequence="19"
+            action="audit_stats_action"/> <!-- Apparait en  menu n°3 -->
+
+        <menuitem id="audit_menu004" name="⚙ PARAMÈTRES"
+            parent="main_audit_menu" sequence="20"/> <!-- Apparait en  menu n°4 -->
+
+        <menuitem id="audit_menu004A" name="🚦 Gestionnaire d'états"
+                  parent="audit_menu004"
+                  action="audit_param_action"/> <!-- Apparait en sous-menu n°1 du menu n°4 -->
+
+        <menuitem id="audit_menu004B" name="📂 Gestionnaire des types de préconisations"
+                  parent="audit_menu004"
+                  action="audit_params_action"/> <!-- Apparait en sous-menu n°2 du menu n°4 -->
+
+    </odoo>
