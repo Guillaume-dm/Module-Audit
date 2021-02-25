@@ -1,0 +1,1098 @@
+<?xml version="1.0" encoding="UTF-8"?> <!-- Indique les caractéristiques du XML qui est utilisé -->
+    <odoo>
+
+        <report
+        id="audit_adquat_audit"
+        model="adquat_audit.audit"
+        string="🖨️ Audit (version full)"
+        name="adquat_audit.audit_a"
+        report_type="qweb-html"
+        print_report_name="'audit_full'"
+        attachment_use="False"
+        attachment="'audit_full.pdf'" /> <!-- Nom de l'audit qui sera généré -->
+
+        <template id="audit_a">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                    <br></br>
+                        <h1>
+                            <strong>
+                                <span style="font-size:40px;color:#05ab31; text-align:center"> </span>
+                                <p style="font-size:40px;color:#05ab31; text-align:center" > <span t-field="o.name"/> <!-- Sert à afficher le client destiné à l'audit -->
+                                    <br></br>
+                                </p>
+                            </strong>
+                        </h1>
+                        <h2>
+                            <em>
+                                <p style="font-size:20px;color:#05ab31" > Audit crée le : <span t-field="o.date_creation"/> <!-- Sert à afficher la date de création de l'audit -->
+                                    <br></br>
+                                    Document réalisé(e) par : <span t-field="o.salarie_id"/> <!-- Sert à afficher l'auteur de l'audit -->
+                                    <br></br>
+                                </p>
+                            </em>
+                        </h2>
+                        <h5>
+                            <p>
+                                📰 Introduction : Ce document est un compte rendu de l’audit du système d’information de <span t-field="o.name" /> , il a pour
+                                but de vous fournir un état des lieux, de mettre en évidence les problèmes et d’établir des
+                                préconisations chiffrées. <!-- Sert à afficher le message automatique de l'introduction personalisé -->
+                            </p>
+                        </h5>
+                        <p>
+                            <h3>
+                                 <strong>
+                                     <p>
+                                         AUDIT ÉTAT DES LIEUX INFORMATIQUE <!-- Annonce le commencement de l'audit -->
+                                     </p>
+                                     <u>
+                                         1- 🔌 Infrastructure <!-- Annonce de la première grande partie de l'audit -->
+                                     </u>
+                                     <br></br>
+                                 </strong>
+                            </h3>
+                            <h5>
+                                <br></br>
+                                    🏭 Serveurs physiques ? <span t-field="o.serveurs_reels"/>
+                                <table style="width:100%;border:1px solid">
+                                    <tr style="border:1px solid"> <!-- Sert à afficher la légende de la table des serveurs physiques -->
+                                        <td style="border:1px solid; text-align: center">📍 IP</td> <!-- Légende de la colonne n°1 -->
+                                        <td style="border:1px solid; text-align: center">🔠 Nom de serveur</td> <!-- Légende de la colonne n°2 -->
+                                        <td style="border:1px solid; text-align:center">🔸 Marque</td> <!-- Légende de la colonne n°3 -->
+                                        <td style="border:1px solid; text-align:center">🔢 Modèle</td> <!-- Légende de la colonne n°4 -->
+                                        <td style="border:1px solid; text-align:center">🆔 Numéro de série</td> <!-- Légende de la colonne n°5 -->
+                                        <td style="border:1px solid; text-align: center">🛠️ Garantie</td> <!-- Légende de la colonne n°6 -->
+                                        <td style="border:1px solid; text-align: center">☑️ Rôle Windows</td> <!-- Légende de la colonne n°7 -->
+                                        <td style="border:1px solid; text-align: center">✅ Autres rôles</td> <!-- Légende de la colonne n°8 -->
+                                        <td style="border:1px solid; text-align: center">⚡ Processeur</td> <!-- Légende de la colonne n°9 -->
+                                        <td style="border:1px solid; text-align: center">♨‍ RAM</td> <!-- Légende de la colonne n°10 -->
+                                        <td style="border:1px solid; text-align: center">💽‍ Disque dur</td> <!-- Légende de la colonne n°11 -->
+                                        <td style="border:1px solid; text-align: center">💽💽 Carte + système raid</td> <!-- Légende de la colonne n°12 -->
+                                        <td style="border:1px solid; text-align: center">⚙ OS</td> <!-- Légende de la colonne n°13 -->
+                                        <td style="border:1px solid; text-align: center">🔎 Emplacement physique</td> <!-- Légende de la colonne n°14 -->
+                                    </tr>
+                                    <t t-foreach="o.l_serveur_reel" t-as="line">
+                                        <tr style="border:1px solid">
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.ip"/> <!-- Sert à afficher l'IP du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.nom_serveur"/> <!-- Sert à afficher le nom du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.marque.name"/> <!-- Sert à afficher la marque du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.modele_serveur.name"/> <!-- Sert à afficher le modèle du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.numero_serie"/> <!-- Sert à afficher le nuùméro de série du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.garantie.name"/> <!-- Sert à afficher la durée de la garantie du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.role_windows.name"/> <!-- Sert à afficher les rôles Windows possibles du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.autre_role.name"/> <!-- Sert à afficher les autres rôles possibles du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.processeur.name"/> <!-- Sert à afficher le type de proceseur utilisé du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.ram2.name"/> <!-- Sert à afficher la capacité de la RAM du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.disque_dur.name"/> <!-- Sert à afficher la capacité du disque dur du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.systeme_raid.name"/> <!-- Sert à afficher le systeme raid du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.os.name"/> <!-- Sert à afficher l'OS du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.emplacement.name"/> <!-- Sert à afficher l'emplacement physique du serveur -->
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                                <br></br>
+                                    💭 Serveurs virtuels ? <span t-field="o.serveurs_virtuels"/>
+                                <table style="width:100%;border:1px solid">
+                                    <tr style="border:1px solid"> <!-- Sert à afficher la légende de la table des serveurs virtuels -->
+                                        <td style="border:1px solid; text-align: center">📍 IP</td> <!-- Légende de la colonne n°1 -->
+                                        <td style="border:1px solid; text-align: center">🔠 Nom de serveur</td> <!-- Légende de la colonne n°2 -->
+                                        <td style="border:1px solid; text-align: center">🔸 Marque</td> <!-- Légende de la colonne n°3 -->
+                                        <td style="border:1px solid; text-align: center">☑️ Rôle Windows</td> <!-- Légende de la colonne n°4 -->
+                                        <td style="border:1px solid; text-align: center">✅ Autres rôles</td> <!-- Légende de la colonne n°5 -->
+                                        <td style="border:1px solid; text-align: center" >⚡ Processeur</td> <!-- Légende de la colonne n°6 -->
+                                        <td style="border:1px solid; text-align: center">♨‍ RAM</td> <!-- Légende de la colonne n°7 -->
+                                        <td style="border:1px solid; text-align: center">💽‍ Disque dur</td> <!-- Légende de la colonne n°8 -->
+                                        <td style="border:1px solid; text-align: center">⚙ OS</td> <!-- Légende de la colonne n°9 -->
+                                    </tr>
+                                    <t t-foreach="o.l_serveur_virt" t-as="line">
+                                        <tr style="border:1px solid; text-align: center">
+                                            <td style="border:1px solid">
+                                                <t t-esc="line.ip"/> <!-- Sert à afficher l'IP du serveur virtuel -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.nom_serveur"/> <!-- Sert à afficher le nom du serveur virtuel -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.marque.name"/> <!-- Sert à afficher la marque du serveur virtuel -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.role_windows.name"/> <!-- Sert à afficher les rôles Windows possible du serveur virtuel -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.autre_role.name"/> <!-- Sert à afficher les autres rôles possibles du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.processeur.name"/> <!-- Sert à afficher le type de proceseur utilisé du serveur virtuel -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.ram2.name"/> <!-- Sert à afficher la capacité de la RAM du serveur virtuel -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.disque_dur.name"/> <!-- Sert à afficher la capacité du disque dur du serveur virtuel -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.os.name"/> <!-- Sert à afficher l'OS du serveur virtuel -->
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                                <br></br>
+                                    🌐 Réseau internet : <!-- Sert à afficher le nom de la prochaine table -->
+                                <table style="width:100%;border:1px solid">
+                                    <tr style="border:1px solid"> <!-- Sert à afficher la légende du réseau internet -->
+                                        <td style="border:1px solid; text-align: center">📍 Site</td> <!-- Légende de la colonne n°1 -->
+                                        <td style="border:1px solid; text-align: center">⚙ Plage IP</td> <!-- Légende de la colonne n°2 -->
+                                        <td style="border:1px solid; text-align: center">🎛️ Masque</td> <!-- Légende de la colonne n°3 -->
+                                        <td style="border:1px solid; text-align: center">📶 Routeur</td> <!-- Légende de la colonne n°4 -->
+                                        <td style="border:1px solid; text-align: center">📟‍ DNS</td> <!-- Légende de la colonne n°5 -->
+                                    </tr>
+                                    <t t-foreach="o.l_reseau" t-as="line">
+                                        <tr style="border:1px solid">
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.site.name"/> <!-- Sert à afficher le lieu du réseau internet -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.plage_ip"/> <!-- Sert à afficher la plage IP du réseau internet -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.masque"/> <!-- Sert à afficher le masque du réseau internet -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.routeur"/> <!-- Sert à afficher le routeur du réseau internet -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.dns"/> <!-- Sert à afficher le DNS du réseau internet -->
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                                <br></br>
+                                    🖨️📽️ Équipements : <!-- Sert à afficher le nom de la prochaine table -->
+                                <table style="width:100%;border:1px solid">
+                                    <tr style="border:1px solid"> <!-- Sert à afficher la légende de la table équipempents -->
+                                        <td style="border:1px solid; text-align: center">📍 Site</td> <!-- Légende de la colonne n°1 -->
+                                        <td style="border:1px solid; text-align: center">❓ Nom/description</td> <!-- Légende de la colonne n°2 -->
+                                        <td style="border:1px solid; text-align: center">🔸 Marque</td> <!-- Légende de la colonne n°3 -->
+                                        <td style="border:1px solid; text-align: center">⚙ Modèle</td> <!-- Légende de la colonne n°4 -->
+                                        <td style="border:1px solid; text-align: center">✅ Fonction(s)</td> <!-- Légende de la colonne n°5 -->
+                                        <td style="border:1px solid; text-align: center">🔎 Emplacement physique</td> <!-- Légende de la colonne n°6 -->
+                                    </tr>
+                                    <t t-foreach="o.l_equipements" t-as="line">
+                                        <tr style="border:1px solid">
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.site.name"/> <!-- Sert à afficher le lieu de l'équipement (ville) -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.nom_description.name"/> <!-- Sert à afficher le nom et/ou la description de l'équipement -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.marque.name"/> <!-- Sert à afficher la marque de l'équipement -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.modele_equipement.name"/> <!-- Sert à afficher le modèle de l'équipement -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.fonction.name"/> <!-- Sert à afficher la ou les fonctions de l'équipement -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.emplacement.name"/> <!-- Sert à afficher l'emplacement physique de l'équipement -->
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                                <br></br>
+                                    🌐📶 Accès internet : <span t-field="o.acces_internet_2" /> <!-- Champ image sur l'accès internet de l'entreprise -->
+                                <br></br>
+                                    📧 Messagerie : <span t-field="o.messagerie" /> <!-- Affiche le champ texte sur les messageries de l'entreprise -->
+                                <br></br>
+                                    📦 Configuration hyperviseur : <span t-field="o.hyperviseur" /> <!-- Affiche le champ texte sur la configuration hyperviseur de l'entreprise -->
+                                <br></br>
+                                    🎛️ Local informatique : <span t-field="o.local" /> <!-- Affiche le champ texte sur le local informatique de l'entreprise -->
+                                <br></br>
+                                    🔌 Baie informatique : <span t-field="o.baie" /> <!-- Affiche le champ texte sur la baie informatique de l'entreprise -->
+                                <br></br>
+                            </h5>
+                        </p>
+                        <p>
+                            <h3>
+                                 <strong>
+                                     <u>
+                                         2- 🔑 Sécurité <!-- Seconde grande partie de l'audit -->
+                                     </u>
+                                 </strong>
+                            </h3>
+                            <h5>
+                                <br></br>
+                                    🔄 Politique de mise à jour Windows : <span t-field="o.pol_windows" /><!-- Affiche sur le champ texte sur les mises à jours Windows par l'entreprise -->
+                                <br></br>
+                                    ☣ Antivirus : <span t-field="o.antivirus" /> <!-- Affiche le champ texte sur l'antivirus de l(entreprise -->
+                                <br></br>
+                                    📩 Antispam : <span t-field="o.antispam" /><!-- Affiche le champ texte sur l'antispam de l'entreprise -->
+                                <br></br>
+                                    🔥 Pare-feu : <span t-field="o.parefeu" /> <!-- Affiche le champ texte sur le pare-feu de l'entreprise -->
+                                <br></br>
+                                    🔢 Chiffrage : <span t-field="o.chiffrage" /> <!-- Affiche le champ texte sur le chiffrement des données -->
+                                <br></br>
+                                    🌍 VPN : <span t-field="o.vpn" /> <!-- Affiche le champ texte sur le VPN -->
+                                <br></br>
+                                    💾 Sauvegardes : <span t-field="o.sauvegardes" /> <!-- Affiche le champ texte sur les procédés de sauvegardes -->
+                                <br></br>
+                            </h5>
+                        </p>
+                        <p>
+                            <h3>
+                                 <strong>
+                                     <u>
+                                        3- 🖥️ Parc informatique <!-- Troisième grande partie de l'audit -->
+                                    </u>
+                                 </strong>
+                            </h3>
+                            <h5>
+                                <table style="width:100%;border:1px solid">
+                                    <tr style="border:1px solid"> <!-- Sert à afficher la légende du parc informatique -->
+                                        <td style="border:1px solid; text-align: center"> 👨‍💻👩‍💻 Nom de l'utilisateur</td> <!-- Légende de la colonne n°1 -->
+                                        <td style="border:1px solid; text-align: center"> ⚙ Modèle</td> <!-- Légende de la colonne n°2 -->
+                                        <td style="border:1px solid; text-align: center">💻🖥️ Système d'exploitation</td> <!-- Légende de la colonne n°3 -->
+                                        <td style="border:1px solid; text-align: center">⚡ Processeur</td> <!-- Légende de la colonne n°4 -->
+                                        <td style="border:1px solid; text-align: center">♨‍ RAM</td> <!-- Légende de la colonne n°5 -->
+                                        <td style="border:1px solid; text-align: center">💽 Type de stockage</td> <!-- Légende de la colonne n°6 -->
+                                        <td style="border:1px solid; text-align: center">⌨ Version d'office</td> <!-- Légende de la colonne n°7 -->
+                                        <td style="border:1px solid; text-align: center">✏️‍ Commentaires</td> <!-- Légende de la colonne n°8 -->
+                                    </tr>
+                                    <t t-foreach="o.l_ram" t-as="line">
+                                        <tr style="border:1px solid">
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.username"/> <!-- Sert à afficher l'utilisateur courant de l'ordinateur -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.modele.name"/> <!-- Sert à afficher le modèle de l'ordinateur -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.systeme.name"/> <!-- Sert à afficher le système d'explotation de l'ordinateur -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.processeur.name"/> <!-- Sert à afficher le type de processeur de l'ordinateur -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.ram2.name"/> <!-- Sert à afficher la capacité de la RAM de l'ordinateur -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.type_sto.name"/> <!-- Sert à afficher le type de stockage de l'ordinateur -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.office.name"/> <!-- Sert à afficher le version d'office utilisée de l'ordinateur -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.commentaires"/> <!-- Sert à afficher les commentaires par rapport à l'ordinateur -->
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                            </h5>
+                        </p>
+                        <p>
+                            <h3>
+                                 <strong>
+                                     <u>
+                                        4- ⚠️ Préconisations <!-- Quatrième grande partie de l'audit -->
+                                     </u>
+                                 </strong>
+                                <h5>
+                                    <table style="width:100%;border:1px solid">
+                                        <tr style="border:1px solid"> <!-- Sert à afficher la légende des préconisations finales -->
+                                            <td style="border:1px solid; text-align: center">❔ Type de préconisation</td> <!-- Légende de la colonne n°1 -->
+                                            <td style="border:1px solid; text-align: center">ℹ Préconisations</td> <!-- Légende de la colonne n°2 -->
+                                            <td style="border:1px solid; text-align: center">🚦 Degré d'urgence</td> <!-- Légende de la colonne n°3 -->
+                                        </tr>
+                                        <t t-foreach="o.l_preconisation" t-as="line">
+                                            <tr style="border:1px solid">
+                                                <td style="border:1px solid; text-align: center">
+                                                    <t t-esc="line.liste_un.name"/> <!-- Sert à afficher le type de préconisation -->
+                                                </td>
+                                                <td style="border:1px solid; text-align: center">
+                                                    <t t-esc="line.preconisation"/> <!-- Sert à afficher le libelle de la préconisation -->
+                                                </td>
+                                                <td style="border:1px solid; text-align: center">
+                                                    <t t-esc="line.liste_deux.name"/> <!-- Sert à afficher le niveau d'urgence de la préconisation -->
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </table>
+                                    <em>
+                                        <br></br>
+                                        <u>
+                                            Légende : <!-- Annonce que ce qui suit correspond à une légende -->
+                                        </u>
+                                        <br></br>
+                                        🔴 = Amélioration très urgent, doit-être réglé impérativement. <!-- Légende pour la pastille de couleur rouge-->
+                                        <br></br>
+                                        🟠 = Amélioration urgent, à y remédier dans les procahins jours. <!-- Légende pour la pastille de couleur orange-->
+                                        <br></br>
+                                        🟡 = Amélioration recommandé. <!-- Légende pour la pastille de couleur jaune-->
+                                        <br></br>
+                                        🟢 = Amélioration facultative. <!-- Légende pour la pastille de couleur verte-->
+                                        <br></br>
+                                        ⚪ = État d'urgence non défini. <!-- Légende pour la pastille de couleur blanche-->
+                                        <br></br>
+                                    </em>
+                                </h5>
+                            </h3>
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+        </template>
+
+    <report
+        id="audit_adquat_audit_b"
+        model="adquat_audit.audit"
+        string="🖨️ Audit (version moyenne)"
+        name="adquat_audit.audit_b"
+        report_type="qweb-html"
+        print_report_name="'audit_default'"
+        attachment_use="False"
+        attachment="'audit_default.pdf'" /> <!-- Nom de l'audit qui sera généré -->
+
+        <template id="audit_b">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                    <br></br>
+                        <h1>
+                            <strong>
+                                <span style="font-size:40px;color:#05ab31; text-align:center"> </span>
+                                <p style="font-size:40px;color:#05ab31; text-align:center" > <span t-field="o.name"/> <!-- Sert à afficher le client destiné à l'audit -->
+                                    <br></br>
+                                </p>
+                            </strong>
+                        </h1>
+                        <h2>
+                            <em>
+                                <p style="font-size:20px;color:#05ab31" > Audit crée le : <span t-field="o.date_creation"/> <!-- Sert à afficher la date de création de l'audit -->
+                                    <br></br>
+                                    Document réalisé(e) par : <span t-field="o.salarie_id"/> <!-- Sert à afficher l'auteur de l'audit -->
+                                    <br></br>
+                                </p>
+                            </em>
+                        </h2>
+                        <h5>
+                            <p>
+                                Introduction : Ce document est un compte rendu de l’audit du système d’information de <span t-field="o.name" /> , il a pour
+                                but de vous fournir un état des lieux, de mettre en évidence les problèmes et d’établir des
+                                préconisations chiffrées. <!-- Sert à afficher le message automatique de l'introduction personalisé -->
+                            </p>
+                        </h5>
+                        <p>
+                            <h3>
+                                 <strong>
+                                     <p>
+                                         AUDIT ÉTAT DES LIEUX INFORMATIQUE <!-- Annonce le commencement de l'audit -->
+                                     </p>
+                                     <u>
+                                         1- Infrastructure <!-- Annonce de la première grande partie de l'audit -->
+                                     </u>
+                                     <br></br>
+                                 </strong>
+                            </h3>
+                            <h5>
+                                <br></br>
+                                    Serveurs physiques ? <span t-field="o.serveurs_reels"/>
+                                <table style="width:100%;border:1px solid">
+                                    <tr style="border:1px solid"> <!-- Sert à afficher la légende de la table des serveurs physiques -->
+                                        <td style="border:1px solid; text-align: center">IP</td> <!-- Légende de la colonne n°1 -->
+                                        <td style="border:1px solid; text-align: center">Nom de serveur</td> <!-- Légende de la colonne n°2 -->
+                                        <td style="border:1px solid; text-align:center">♦ Marque</td> <!-- Légende de la colonne n°3 -->
+                                        <td style="border:1px solid; text-align:center">Modèle</td> <!-- Légende de la colonne n°4 -->
+                                        <td style="border:1px solid; text-align:center">Numéro de série</td> <!-- Légende de la colonne n°5 -->
+                                        <td style="border:1px solid; text-align: center">Garantie</td> <!-- Légende de la colonne n°6 -->
+                                        <td style="border:1px solid; text-align: center">☑️ Rôle Windows</td> <!-- Légende de la colonne n°7 -->
+                                        <td style="border:1px solid; text-align: center">Autres rôles</td> <!-- Légende de la colonne n°8 -->
+                                        <td style="border:1px solid; text-align: center">⚡ Processeur</td> <!-- Légende de la colonne n°9 -->
+                                        <td style="border:1px solid; text-align: center">♨‍ RAM</td> <!-- Légende de la colonne n°10 -->
+                                        <td style="border:1px solid; text-align: center">Disque dur</td> <!-- Légende de la colonne n°11 -->
+                                        <td style="border:1px solid; text-align: center">Carte + système raid</td> <!-- Légende de la colonne n°12 -->
+                                        <td style="border:1px solid; text-align: center">⚙ OS</td> <!-- Légende de la colonne n°13 -->
+                                        <td style="border:1px solid; text-align: center">Emplacement physique</td> <!-- Légende de la colonne n°14 -->
+                                    </tr>
+                                    <t t-foreach="o.l_serveur_reel" t-as="line">
+                                        <tr style="border:1px solid">
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.ip"/> <!-- Sert à afficher l'IP du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.nom_serveur"/> <!-- Sert à afficher le nom du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.marque.name"/> <!-- Sert à afficher la marque du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.modele_serveur.name"/> <!-- Sert à afficher le modèle du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.numero_serie"/> <!-- Sert à afficher le nuùméro de série du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.garantie.name"/> <!-- Sert à afficher la durée de la garantie du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.role_windows.name"/> <!-- Sert à afficher les rôles Windows possibles du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.autre_role.name"/> <!-- Sert à afficher les autres rôles possibles du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.processeur.name"/> <!-- Sert à afficher le type de proceseur utilisé du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.ram2.name"/> <!-- Sert à afficher la capacité de la RAM du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.disque_dur.name"/> <!-- Sert à afficher la capacité du disque dur du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.systeme_raid.name"/> <!-- Sert à afficher le systeme raid du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.os.name"/> <!-- Sert à afficher l'OS du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.emplacement.name"/> <!-- Sert à afficher l'emplacement physique du serveur -->
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                                <br></br>
+                                    Serveurs virtuels ? <span t-field="o.serveurs_virtuels"/>
+                                <table style="width:100%;border:1px solid">
+                                    <tr style="border:1px solid"> <!-- Sert à afficher la légende de la table des serveurs virtuels -->
+                                        <td style="border:1px solid; text-align: center">IP</td> <!-- Légende de la colonne n°1 -->
+                                        <td style="border:1px solid; text-align: center">Nom de serveur</td> <!-- Légende de la colonne n°2 -->
+                                        <td style="border:1px solid; text-align: center">♦ Marque</td> <!-- Légende de la colonne n°3 -->
+                                        <td style="border:1px solid; text-align: center">☑️ Rôle Windows</td> <!-- Légende de la colonne n°4 -->
+                                        <td style="border:1px solid; text-align: center">Autres rôles</td> <!-- Légende de la colonne n°5 -->
+                                        <td style="border:1px solid; text-align: center" >⚡ Processeur</td> <!-- Légende de la colonne n°6 -->
+                                        <td style="border:1px solid; text-align: center">♨‍ RAM</td> <!-- Légende de la colonne n°7 -->
+                                        <td style="border:1px solid; text-align: center">💽‍ Disque dur</td> <!-- Légende de la colonne n°8 -->
+                                        <td style="border:1px solid; text-align: center">⚙ OS</td> <!-- Légende de la colonne n°9 -->
+                                    </tr>
+                                    <t t-foreach="o.l_serveur_virt" t-as="line">
+                                        <tr style="border:1px solid; text-align: center">
+                                            <td style="border:1px solid">
+                                                <t t-esc="line.ip"/> <!-- Sert à afficher l'IP du serveur virtuel -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.nom_serveur"/> <!-- Sert à afficher le nom du serveur virtuel -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.marque.name"/> <!-- Sert à afficher la marque du serveur virtuel -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.role_windows.name"/> <!-- Sert à afficher les rôles Windows possible du serveur virtuel -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.autre_role.name"/> <!-- Sert à afficher les autres rôles possibles du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.processeur.name"/> <!-- Sert à afficher le type de proceseur utilisé du serveur virtuel -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.ram2.name"/> <!-- Sert à afficher la capacité de la RAM du serveur virtuel -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.disque_dur.name"/> <!-- Sert à afficher la capacité du disque dur du serveur virtuel -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.os.name"/> <!-- Sert à afficher l'OS du serveur virtuel -->
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                                <br></br>
+                                    Réseau internet : <!-- Sert à afficher le nom de la prochaine table -->
+                                <table style="width:100%;border:1px solid">
+                                    <tr style="border:1px solid"> <!-- Sert à afficher la légende du réseau internet -->
+                                        <td style="border:1px solid; text-align: center">Site</td> <!-- Légende de la colonne n°1 -->
+                                        <td style="border:1px solid; text-align: center">⚙ Plage IP</td> <!-- Légende de la colonne n°2 -->
+                                        <td style="border:1px solid; text-align: center">Masque</td> <!-- Légende de la colonne n°3 -->
+                                        <td style="border:1px solid; text-align: center">Routeur</td> <!-- Légende de la colonne n°4 -->
+                                        <td style="border:1px solid; text-align: center">DNS</td> <!-- Légende de la colonne n°5 -->
+                                    </tr>
+                                    <t t-foreach="o.l_reseau" t-as="line">
+                                        <tr style="border:1px solid">
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.site.name"/> <!-- Sert à afficher le lieu du réseau internet -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.plage_ip"/> <!-- Sert à afficher la plage IP du réseau internet -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.masque"/> <!-- Sert à afficher le masque du réseau internet -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.routeur"/> <!-- Sert à afficher le routeur du réseau internet -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.dns"/> <!-- Sert à afficher le DNS du réseau internet -->
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                                <br></br>
+                                    🖨Équipements : <!-- Sert à afficher le nom de la prochaine table -->
+                                <table style="width:100%;border:1px solid">
+                                    <tr style="border:1px solid"> <!-- Sert à afficher la légende de la table équipempents -->
+                                        <td style="border:1px solid; text-align: center">Site</td> <!-- Légende de la colonne n°1 -->
+                                        <td style="border:1px solid; text-align: center">Nom/description</td> <!-- Légende de la colonne n°2 -->
+                                        <td style="border:1px solid; text-align: center">♦ Marque</td> <!-- Légende de la colonne n°3 -->
+                                        <td style="border:1px solid; text-align: center">⚙ Modèle</td> <!-- Légende de la colonne n°4 -->
+                                        <td style="border:1px solid; text-align: center">Fonction(s)</td> <!-- Légende de la colonne n°5 -->
+                                        <td style="border:1px solid; text-align: center">Emplacement physique</td> <!-- Légende de la colonne n°6 -->
+                                    </tr>
+                                    <t t-foreach="o.l_equipements" t-as="line">
+                                        <tr style="border:1px solid">
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.site.name"/> <!-- Sert à afficher le lieu de l'équipement (ville) -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.nom_description.name"/> <!-- Sert à afficher le nom et/ou la description de l'équipement -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.marque.name"/> <!-- Sert à afficher la marque de l'équipement -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.modele_equipement.name"/> <!-- Sert à afficher le modèle de l'équipement -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.fonction.name"/> <!-- Sert à afficher la ou les fonctions de l'équipement -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.emplacement.name"/> <!-- Sert à afficher l'emplacement physique de l'équipement -->
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                                <br></br>
+                                    Accès internet : <span t-field="o.acces_internet_2" /> <!-- Champ image sur l'accès internet de l'entreprise -->
+                                <br></br>
+                                    Messagerie : <span t-field="o.messagerie" /> <!-- Affiche le champ texte sur les messageries de l'entreprise -->
+                                <br></br>
+                                    Configuration hyperviseur : <span t-field="o.hyperviseur" /> <!-- Affiche le champ texte sur la configuration hyperviseur de l'entreprise -->
+                                <br></br>
+                                    Local informatique : <span t-field="o.local" /> <!-- Affiche le champ texte sur le local informatique de l'entreprise -->
+                                <br></br>
+                                    Baie informatique : <span t-field="o.baie" /> <!-- Affiche le champ texte sur la baie informatique de l'entreprise -->
+                                <br></br>
+                            </h5>
+                        </p>
+                        <p>
+                            <h3>
+                                 <strong>
+                                     <u>
+                                         2- Sécurité <!-- Seconde grande partie de l'audit -->
+                                     </u>
+                                 </strong>
+                            </h3>
+                            <h5>
+                                <br></br>
+                                    Politique de mise à jour Windows : <span t-field="o.pol_windows" /><!-- Affiche sur le champ texte sur les mises à jours Windows par l'entreprise -->
+                                <br></br>
+                                    ☣ Antivirus : <span t-field="o.antivirus" /> <!-- Affiche le champ texte sur l'antivirus de l(entreprise -->
+                                <br></br>
+                                    Antispam : <span t-field="o.antispam" /><!-- Affiche le champ texte sur l'antispam de l'entreprise -->
+                                <br></br>
+                                    Pare-feu : <span t-field="o.parefeu" /> <!-- Affiche le champ texte sur le pare-feu de l'entreprise -->
+                                <br></br>
+                                    Chiffrage : <span t-field="o.chiffrage" /> <!-- Affiche le champ texte sur le chiffrement des données -->
+                                <br></br>
+                                    VPN : <span t-field="o.vpn" /> <!-- Affiche le champ texte sur le VPN -->
+                                <br></br>
+                                    Sauvegardes : <span t-field="o.sauvegardes" /> <!-- Affiche le champ texte sur les procédés de sauvegardes -->
+                                <br></br>
+                            </h5>
+                        </p>
+                        <p>
+                            <h3>
+                                 <strong>
+                                     <u>
+                                        3- Parc informatique <!-- Troisième grande partie de l'audit -->
+                                    </u>
+                                 </strong>
+                            </h3>
+                            <h5>
+                                <table style="width:100%;border:1px solid">
+                                    <tr style="border:1px solid"> <!-- Sert à afficher la légende du parc informatique -->
+                                        <td style="border:1px solid; text-align: center"> ♂ ♀ Nom de l'utilisateur</td> <!-- Légende de la colonne n°1 -->
+                                        <td style="border:1px solid; text-align: center"> ⚙ Modèle</td> <!-- Légende de la colonne n°2 -->
+                                        <td style="border:1px solid; text-align: center">Système d'exploitation</td> <!-- Légende de la colonne n°3 -->
+                                        <td style="border:1px solid; text-align: center">⚡ Processeur</td> <!-- Légende de la colonne n°4 -->
+                                        <td style="border:1px solid; text-align: center">♨‍ RAM</td> <!-- Légende de la colonne n°5 -->
+                                        <td style="border:1px solid; text-align: center">Type de stockage</td> <!-- Légende de la colonne n°6 -->
+                                        <td style="border:1px solid; text-align: center">⌨ Version d'office</td> <!-- Légende de la colonne n°7 -->
+                                        <td style="border:1px solid; text-align: center">✏️‍ Commentaires</td> <!-- Légende de la colonne n°8 -->
+                                    </tr>
+                                    <t t-foreach="o.l_ram" t-as="line">
+                                        <tr style="border:1px solid">
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.username"/> <!-- Sert à afficher l'utilisateur courant de l'ordinateur -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.modele.name"/> <!-- Sert à afficher le modèle de l'ordinateur -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.systeme.name"/> <!-- Sert à afficher le système d'explotation de l'ordinateur -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.processeur.name"/> <!-- Sert à afficher le type de processeur de l'ordinateur -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.ram2.name"/> <!-- Sert à afficher la capacité de la RAM de l'ordinateur -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.type_sto.name"/> <!-- Sert à afficher le type de stockage de l'ordinateur -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.office.name"/> <!-- Sert à afficher le version d'office utilisée de l'ordinateur -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.commentaires"/> <!-- Sert à afficher les commentaires par rapport à l'ordinateur -->
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                            </h5>
+                        </p>
+                        <p>
+                            <h3>
+                                 <strong>
+                                     <u>
+                                        4- ⚠️ Préconisations <!-- Quatrième grande partie de l'audit -->
+                                     </u>
+                                 </strong>
+                                <h5>
+                                    <table style="width:100%;border:1px solid">
+                                        <tr style="border:1px solid"> <!-- Sert à afficher la légende des préconisations finales -->
+                                            <td style="border:1px solid; text-align: center">Type de préconisation</td> <!-- Légende de la colonne n°1 -->
+                                            <td style="border:1px solid; text-align: center">ℹ Préconisations</td> <!-- Légende de la colonne n°2 -->
+                                            <td style="border:1px solid; text-align: center">Degré d'urgence</td> <!-- Légende de la colonne n°3 -->
+                                        </tr>
+                                        <t t-foreach="o.l_preconisation" t-as="line">
+                                            <tr style="border:1px solid">
+                                                <td style="border:1px solid; text-align: center">
+                                                    <t t-esc="' '.join(line.liste_un.name.split(' ')[1:])"/> <!-- Sert à afficher le type de préconisation -->
+                                                </td>
+                                                <td style="border:1px solid; text-align: center">
+                                                    <t t-esc="line.preconisation"/> <!-- Sert à afficher le libelle de la préconisation -->
+                                                </td>
+                                                <td style="border:1px solid; text-align: center">
+                                                    <t t-esc="line.liste_deux.name"/> <!-- Sert à afficher le niveau d'urgence de la préconisation -->
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </table>
+                                    <em>
+                                        <br></br>
+                                        <u>
+                                            Légende : <!-- Annonce que ce qui suit correspond à une légende -->
+                                        </u>
+                                        <br></br>
+                                        ⚪ = Amélioration facultative. <!-- Légende pour la pastille de couleur blanche-->
+                                        <br></br>
+                                    </em>
+                                </h5>
+                            </h3>
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+        </template>
+
+    <report
+        id="audit_adquat_audit_c"
+        model="adquat_audit.audit"
+        string="🖨️ Audit (version light)"
+        name="adquat_audit.audit_c"
+        report_type="qweb-html"
+        print_report_name="'audit_light'"
+        attachment_use="False"
+        attachment="'audit_light.pdf'" /> <!-- Nom de l'audit qui sera généré -->
+
+        <template id="audit_c">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                    <br></br>
+                        <h1>
+                            <strong>
+                                <span style="font-size:40px;color:#05ab31; text-align:center"> </span>
+                                <p style="font-size:40px;color:#05ab31; text-align:center" > <span t-field="o.name"/> <!-- Sert à afficher le client destiné à l'audit -->
+                                    <br></br>
+                                </p>
+                            </strong>
+                        </h1>
+                        <h2>
+                            <em>
+                                <p style="font-size:20px;color:#05ab31" > Audit crée le : <span t-field="o.date_creation"/> <!-- Sert à afficher la date de création de l'audit -->
+                                    <br></br>
+                                    Document réalisé(e) par : <span t-field="o.salarie_id"/> <!-- Sert à afficher l'auteur de l'audit -->
+                                    <br></br>
+                                </p>
+                            </em>
+                        </h2>
+                        <h5>
+                            <p>
+                                Introduction : Ce document est un compte rendu de l’audit du système d’information de <span t-field="o.name" /> , il a pour
+                                but de vous fournir un état des lieux, de mettre en évidence les problèmes et d’établir des
+                                préconisations chiffrées. <!-- Sert à afficher le message automatique de l'introduction personalisé -->
+                            </p>
+                        </h5>
+                        <p>
+                            <h3>
+                                 <strong>
+                                     <p>
+                                         AUDIT ÉTAT DES LIEUX INFORMATIQUE <!-- Annonce le commencement de l'audit -->
+                                     </p>
+                                     <u>
+                                         1- Infrastructure <!-- Annonce de la première grande partie de l'audit -->
+                                     </u>
+                                     <br></br>
+                                 </strong>
+                            </h3>
+                            <h5>
+                                <br></br>
+                                    Serveurs physiques ? <span t-field="o.serveurs_reels"/>
+                                <table style="width:100%;border:1px solid">
+                                    <tr style="border:1px solid"> <!-- Sert à afficher la légende de la table des serveurs physiques -->
+                                        <td style="border:1px solid; text-align: center">IP</td> <!-- Légende de la colonne n°1 -->
+                                        <td style="border:1px solid; text-align: center">Nom de serveur</td> <!-- Légende de la colonne n°2 -->
+                                        <td style="border:1px solid; text-align:center">♦ Marque</td> <!-- Légende de la colonne n°3 -->
+                                        <td style="border:1px solid; text-align:center">Modèle</td> <!-- Légende de la colonne n°4 -->
+                                        <td style="border:1px solid; text-align:center">Numéro de série</td> <!-- Légende de la colonne n°5 -->
+                                        <td style="border:1px solid; text-align: center">Garantie</td> <!-- Légende de la colonne n°6 -->
+                                        <td style="border:1px solid; text-align: center">Rôle Windows</td> <!-- Légende de la colonne n°7 -->
+                                        <td style="border:1px solid; text-align: center">Autres rôles</td> <!-- Légende de la colonne n°8 -->
+                                        <td style="border:1px solid; text-align: center">Processeur</td> <!-- Légende de la colonne n°9 -->
+                                        <td style="border:1px solid; text-align: center"> RAM</td> <!-- Légende de la colonne n°10 -->
+                                        <td style="border:1px solid; text-align: center">Disque dur</td> <!-- Légende de la colonne n°11 -->
+                                        <td style="border:1px solid; text-align: center">Carte + système raid</td> <!-- Légende de la colonne n°12 -->
+                                        <td style="border:1px solid; text-align: center">OS</td> <!-- Légende de la colonne n°13 -->
+                                        <td style="border:1px solid; text-align: center">Emplacement physique</td> <!-- Légende de la colonne n°14 -->
+                                    </tr>
+                                    <t t-foreach="o.l_serveur_reel" t-as="line">
+                                        <tr style="border:1px solid">
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.ip"/> <!-- Sert à afficher l'IP du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.nom_serveur"/> <!-- Sert à afficher le nom du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.marque.name"/> <!-- Sert à afficher la marque du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.modele_serveur.name"/> <!-- Sert à afficher le modèle du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.numero_serie"/> <!-- Sert à afficher le nuùméro de série du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.garantie.name"/> <!-- Sert à afficher la durée de la garantie du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.role_windows.name"/> <!-- Sert à afficher les rôles Windows possibles du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.autre_role.name"/> <!-- Sert à afficher les autres rôles possibles du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.processeur.name"/> <!-- Sert à afficher le type de proceseur utilisé du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.ram2.name"/> <!-- Sert à afficher la capacité de la RAM du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.disque_dur.name"/> <!-- Sert à afficher la capacité du disque dur du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.systeme_raid.name"/> <!-- Sert à afficher le systeme raid du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.os.name"/> <!-- Sert à afficher l'OS du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.emplacement.name"/> <!-- Sert à afficher l'emplacement physique du serveur -->
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                                <br></br>
+                                    Serveurs virtuels ? <span t-field="o.serveurs_virtuels"/>
+                                <table style="width:100%;border:1px solid">
+                                    <tr style="border:1px solid"> <!-- Sert à afficher la légende de la table des serveurs virtuels -->
+                                        <td style="border:1px solid; text-align: center">IP</td> <!-- Légende de la colonne n°1 -->
+                                        <td style="border:1px solid; text-align: center">Nom de serveur</td> <!-- Légende de la colonne n°2 -->
+                                        <td style="border:1px solid; text-align: center">♦ Marque</td> <!-- Légende de la colonne n°3 -->
+                                        <td style="border:1px solid; text-align: center">Rôle Windows</td> <!-- Légende de la colonne n°4 -->
+                                        <td style="border:1px solid; text-align: center">Autres rôles</td> <!-- Légende de la colonne n°5 -->
+                                        <td style="border:1px solid; text-align: center" >Processeur</td> <!-- Légende de la colonne n°6 -->
+                                        <td style="border:1px solid; text-align: center">RAM</td> <!-- Légende de la colonne n°7 -->
+                                        <td style="border:1px solid; text-align: center">Disque dur</td> <!-- Légende de la colonne n°8 -->
+                                        <td style="border:1px solid; text-align: center">OS</td> <!-- Légende de la colonne n°9 -->
+                                    </tr>
+                                    <t t-foreach="o.l_serveur_virt" t-as="line">
+                                        <tr style="border:1px solid; text-align: center">
+                                            <td style="border:1px solid">
+                                                <t t-esc="line.ip"/> <!-- Sert à afficher l'IP du serveur virtuel -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.nom_serveur"/> <!-- Sert à afficher le nom du serveur virtuel -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.marque.name"/> <!-- Sert à afficher la marque du serveur virtuel -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.role_windows.name"/> <!-- Sert à afficher les rôles Windows possible du serveur virtuel -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.autre_role.name"/> <!-- Sert à afficher les autres rôles possibles du serveur physique -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.processeur.name"/> <!-- Sert à afficher le type de proceseur utilisé du serveur virtuel -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.ram2.name"/> <!-- Sert à afficher la capacité de la RAM du serveur virtuel -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.disque_dur.name"/> <!-- Sert à afficher la capacité du disque dur du serveur virtuel -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.os.name"/> <!-- Sert à afficher l'OS du serveur virtuel -->
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                                <br></br>
+                                    Réseau internet : <!-- Sert à afficher le nom de la prochaine table -->
+                                <table style="width:100%;border:1px solid">
+                                    <tr style="border:1px solid"> <!-- Sert à afficher la légende du réseau internet -->
+                                        <td style="border:1px solid; text-align: center">Site</td> <!-- Légende de la colonne n°1 -->
+                                        <td style="border:1px solid; text-align: center">Plage IP</td> <!-- Légende de la colonne n°2 -->
+                                        <td style="border:1px solid; text-align: center">Masque</td> <!-- Légende de la colonne n°3 -->
+                                        <td style="border:1px solid; text-align: center">Routeur</td> <!-- Légende de la colonne n°4 -->
+                                        <td style="border:1px solid; text-align: center">DNS</td> <!-- Légende de la colonne n°5 -->
+                                    </tr>
+                                    <t t-foreach="o.l_reseau" t-as="line">
+                                        <tr style="border:1px solid">
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.site.name"/> <!-- Sert à afficher le lieu du réseau internet -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.plage_ip"/> <!-- Sert à afficher la plage IP du réseau internet -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.masque"/> <!-- Sert à afficher le masque du réseau internet -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.routeur"/> <!-- Sert à afficher le routeur du réseau internet -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.dns"/> <!-- Sert à afficher le DNS du réseau internet -->
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                                <br></br>
+                                    Équipements : <!-- Sert à afficher le nom de la prochaine table -->
+                                <table style="width:100%;border:1px solid">
+                                    <tr style="border:1px solid"> <!-- Sert à afficher la légende de la table équipempents -->
+                                        <td style="border:1px solid; text-align: center">Site</td> <!-- Légende de la colonne n°1 -->
+                                        <td style="border:1px solid; text-align: center">Nom/description</td> <!-- Légende de la colonne n°2 -->
+                                        <td style="border:1px solid; text-align: center">♦ Marque</td> <!-- Légende de la colonne n°3 -->
+                                        <td style="border:1px solid; text-align: center">Modèle</td> <!-- Légende de la colonne n°4 -->
+                                        <td style="border:1px solid; text-align: center">Fonction(s)</td> <!-- Légende de la colonne n°5 -->
+                                        <td style="border:1px solid; text-align: center">Emplacement physique</td> <!-- Légende de la colonne n°6 -->
+                                    </tr>
+                                    <t t-foreach="o.l_equipements" t-as="line">
+                                        <tr style="border:1px solid">
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.site.name"/> <!-- Sert à afficher le lieu de l'équipement (ville) -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.nom_description.name"/> <!-- Sert à afficher le nom et/ou la description de l'équipement -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.marque.name"/> <!-- Sert à afficher la marque de l'équipement -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.modele_equipement.name"/> <!-- Sert à afficher le modèle de l'équipement -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.fonction.name"/> <!-- Sert à afficher la ou les fonctions de l'équipement -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.emplacement.name"/> <!-- Sert à afficher l'emplacement physique de l'équipement -->
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                                <br></br>
+                                    Accès internet : <span t-field="o.acces_internet_2" /> <!-- Champ image sur l'accès internet de l'entreprise -->
+                                <br></br>
+                                    Messagerie : <span t-field="o.messagerie" /> <!-- Affiche le champ texte sur les messageries de l'entreprise -->
+                                <br></br>
+                                    Configuration hyperviseur : <span t-field="o.hyperviseur" /> <!-- Affiche le champ texte sur la configuration hyperviseur de l'entreprise -->
+                                <br></br>
+                                    Local informatique : <span t-field="o.local" /> <!-- Affiche le champ texte sur le local informatique de l'entreprise -->
+                                <br></br>
+                                    Baie informatique : <span t-field="o.baie" /> <!-- Affiche le champ texte sur la baie informatique de l'entreprise -->
+                                <br></br>
+                            </h5>
+                        </p>
+                        <p>
+                            <h3>
+                                 <strong>
+                                     <u>
+                                         2- Sécurité <!-- Seconde grande partie de l'audit -->
+                                     </u>
+                                 </strong>
+                            </h3>
+                            <h5>
+                                <br></br>
+                                    ♥ Politique de mise à jour Windows : <span t-field="o.pol_windows" /><!-- Affiche sur le champ texte sur les mises à jours Windows par l'entreprise -->
+                                <br></br>
+                                    Antivirus : <span t-field="o.antivirus" /> <!-- Affiche le champ texte sur l'antivirus de l(entreprise -->
+                                <br></br>
+                                    Antispam : <span t-field="o.antispam" /><!-- Affiche le champ texte sur l'antispam de l'entreprise -->
+                                <br></br>
+                                    Pare-feu : <span t-field="o.parefeu" /> <!-- Affiche le champ texte sur le pare-feu de l'entreprise -->
+                                <br></br>
+                                    Chiffrage : <span t-field="o.chiffrage" /> <!-- Affiche le champ texte sur le chiffrement des données -->
+                                <br></br>
+                                    VPN : <span t-field="o.vpn" /> <!-- Affiche le champ texte sur le VPN -->
+                                <br></br>
+                                    Sauvegardes : <span t-field="o.sauvegardes" /> <!-- Affiche le champ texte sur les procédés de sauvegardes -->
+                                <br></br>
+                            </h5>
+                        </p>
+                        <p>
+                            <h3>
+                                 <strong>
+                                     <u>
+                                        3- Parc informatique <!-- Troisième grande partie de l'audit -->
+                                    </u>
+                                 </strong>
+                            </h3>
+                            <h5>
+                                <table style="width:100%;border:1px solid">
+                                    <tr style="border:1px solid"> <!-- Sert à afficher la légende du parc informatique -->
+                                        <td style="border:1px solid; text-align: center"> ♂/♀ Nom de l'utilisateur</td> <!-- Légende de la colonne n°1 -->
+                                        <td style="border:1px solid; text-align: center"> Modèle</td> <!-- Légende de la colonne n°2 -->
+                                        <td style="border:1px solid; text-align: center">Système d'exploitation</td> <!-- Légende de la colonne n°3 -->
+                                        <td style="border:1px solid; text-align: center">Processeur</td> <!-- Légende de la colonne n°4 -->
+                                        <td style="border:1px solid; text-align: center">RAM</td> <!-- Légende de la colonne n°5 -->
+                                        <td style="border:1px solid; text-align: center">Type de stockage</td> <!-- Légende de la colonne n°6 -->
+                                        <td style="border:1px solid; text-align: center">Version d'office</td> <!-- Légende de la colonne n°7 -->
+                                        <td style="border:1px solid; text-align: center"> Commentaires</td> <!-- Légende de la colonne n°8 -->
+                                    </tr>
+                                    <t t-foreach="o.l_ram" t-as="line">
+                                        <tr style="border:1px solid">
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.username"/> <!-- Sert à afficher l'utilisateur courant de l'ordinateur -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.modele.name"/> <!-- Sert à afficher le modèle de l'ordinateur -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.systeme.name"/> <!-- Sert à afficher le système d'explotation de l'ordinateur -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.processeur.name"/> <!-- Sert à afficher le type de processeur de l'ordinateur -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.ram2.name"/> <!-- Sert à afficher la capacité de la RAM de l'ordinateur -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.type_sto.name"/> <!-- Sert à afficher le type de stockage de l'ordinateur -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.office.name"/> <!-- Sert à afficher le version d'office utilisée de l'ordinateur -->
+                                            </td>
+                                            <td style="border:1px solid; text-align: center">
+                                                <t t-esc="line.commentaires"/> <!-- Sert à afficher les commentaires par rapport à l'ordinateur -->
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                            </h5>
+                        </p>
+                        <p>
+                            <h3>
+                                 <strong>
+                                     <u>
+                                        4- Préconisations <!-- Quatrième grande partie de l'audit -->
+                                     </u>
+                                 </strong>
+                                <h5>
+                                    <table style="width:100%;border:1px solid">
+                                        <tr style="border:1px solid"> <!-- Sert à afficher la légende des préconisations finales -->
+                                            <td style="border:1px solid; text-align: center">Type de préconisation</td> <!-- Légende de la colonne n°1 -->
+                                            <td style="border:1px solid; text-align: center">ℹ Préconisations</td> <!-- Légende de la colonne n°2 -->
+                                            <td style="border:1px solid; text-align: center">Degré d'urgence</td> <!-- Légende de la colonne n°3 -->
+                                        </tr>
+                                        <t t-foreach="o.l_preconisation" t-as="line">
+                                            <tr style="border:1px solid">
+                                                <td style="border:1px solid; text-align: center">
+                                                    <t t-esc="' '.join(line.liste_un.name.split(' ')[1:])"/> <!-- Sert à afficher le type de préconisation -->
+                                                </td>
+                                                <td style="border:1px solid; text-align: center">
+                                                    <t t-esc="line.preconisation"/> <!-- Sert à afficher le libelle de la préconisation -->
+                                                </td>
+                                                <td style="border:1px solid; text-align: center">
+                                                    <t t-esc="line.liste_deux.name"/> <!-- Sert à afficher le niveau d'urgence de la préconisation -->
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </table>
+                                </h5>
+                            </h3>
+                        </p>
+                    </div>
+                </t>
+            </t>
+        </t>
+        </template>
+
+    </odoo>
